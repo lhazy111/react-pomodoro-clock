@@ -1,15 +1,16 @@
 import React from 'react';
 import { useState, useEffect } from 'react'
 import { Container, Row, Col, Jumbotron, Button, } from 'react-bootstrap';
-import { ArrowDownwardOutlined, ArrowUpwardOutlined } from '@material-ui/icons';
+import { ArrowDownwardOutlined, ArrowUpwardOutlined, ClearRounded } from '@material-ui/icons';
 import './App.css';
 
 function App() {
-  const [breakLength, setBreakLength] = useState(5)
-  const [sessionLength, setSessionLength] = useState(25)
-  const [isSession, setIsSession] = useState(true)
-  const [timeLeft, setTimeLeft] = useState(sessionLength * 60)
+  const [breakLength, setBreakLength] = useState(2)
+  const [sessionLength, setSessionLength] = useState(1)
+  const [cycle, setCycle] = useState(0)
+  const [timeLeft, setTimeLeft] = useState(1 * 60)
   const [playOn, setPlayOn] = useState(false)
+  const [intervalId, setIntervalId] = useState(null)
   const mode = ['Session', 'Break']
   let date = new Date()
   let day = date.getDate()
@@ -23,30 +24,17 @@ function App() {
     let seconds = num - Math.floor(num / 60) * 60
     return seconds < 10 ? `0${seconds}` : seconds
   }
+
+
+  //-----------------------------------------------------------------------------
+  //----------------------------------------------------------------------------
   useEffect(() => {
-    console.log('Time left changed');
-  }, [timeLeft]);
+    startStop()
+  }, [timeLeft, playOn])
 
-  // useEffect(() => {
-  //   let interval = null;
-  //   if (playOn) {
-  //     interval = setInterval(() => {
-  //       setTimeLeft(prevState => prevState - 1);
-  //     }, 1000);
-  //     if (timeLeft < 0 && isSession) {
-  //       setTimeLeft(breakLength * 60)
-  //       setIsSession(false)
-  //     } else if (timeLeft < 0 && !isSession) {
-  //       setTimeLeft(sessionLength * 60)
-  //       setIsSession(true)
-  //     }
-  //   } else {
-  //     clearInterval(interval)
-  //   }
-  //   return () => clearInterval(interval);
-  // }, [playOn, timeLeft, breakLength, isSession, sessionLength]);
+  //-----------------------------------------------------------------------------
 
-  const handleBreakClick = (op) => {
+  const handleClickForBreak = (op) => {
     if (op === '+') {
       setBreakLength(prevState => prevState + 1)
     } else {
@@ -54,40 +42,47 @@ function App() {
     }
   }
 
-  const handleSessionClick = (op) => {
+  const handleClickForSession = (op) => {
     if (op === '+') {
       setSessionLength(prevState => prevState + 1)
-      setTimeLeft(prevState => prevState + 60)
     } else {
       setSessionLength(prevState => prevState > 0 ? prevState - 1 : prevState)
-      setTimeLeft(prevState => prevState > 0 ? prevState - 60 : prevState)
     }
-  }
-
-
-
-  const startStop = () => {
-    console.log('startstop triggered')
-    // const countdown = () => {
-    //   if (playOn) {
-    //     setTimeLeft(prevState => {
-    //       return prevState >= 1 ? prevState - 1 : prevState
-    //     })
-    //   } else {
-    //     //clearInterval(intervalId)
-    //   }
-    // }
-    //let intervalId = setInterval(countdown, 1000)
-
   }
 
   const reset = () => {
     console.log('reset func triggered')
-    setIsSession(true)
+    setCycle(0)
     setTimeLeft(1500)
     setBreakLength(5)
     setSessionLength(25)
   }
+
+
+  const startStop = () => {
+    console.log(`start/stop triggered, PLAYON ${playOn}, CYCLE: ${cycle}`)
+    let tick = null
+    if (playOn) {
+      if (timeLeft > 0) {
+        tick = setTimeout(() => {
+          //console.log('tick id', tick)
+          setTimeLeft(prevState => prevState - 1)
+        }, 100);
+      } else {
+        if (cycle === 0) {
+          setCycle(1)
+          setTimeLeft(breakLength * 60)
+        } else if (cycle === 1) {
+          setCycle(0)
+          setTimeLeft(sessionLength * 60)
+        }
+      }
+    }
+
+  }
+
+
+
 
   return (
     <div className="App">
@@ -112,14 +107,14 @@ function App() {
                       id="break-increment"
                       className='h4'
                       onClick={() => {
-                        handleBreakClick('+')
+                        handleClickForBreak('+')
                       }}
                     />
                     <span id="break-length" className='h4'>{breakLength}</span>
                     <ArrowDownwardOutlined
                       id="break-decrement"
                       onClick={() => {
-                        handleBreakClick('-')
+                        handleClickForBreak('-')
                       }}
                     />
                   </Row>
@@ -128,18 +123,18 @@ function App() {
                     <ArrowUpwardOutlined
                       id="session-increment"
                       onClick={() => {
-                        handleSessionClick('+')
+                        handleClickForSession('+')
                       }} />
                     <span id="session-length">{sessionLength}</span>
                     <ArrowDownwardOutlined
                       id="session-decrement"
                       onClick={() => {
-                        handleSessionClick('-')
+                        handleClickForSession('-')
                       }} />
                   </Row>
                 </Col>
                 <Col className="border border-secondary">
-                  <h4 id="timer-label" className="text-center">{playOn ? isSession ? mode[0] : mode[1] : 'STAND BY'}</h4>
+                  <h4 id="timer-label" className="text-center">{playOn ? mode[cycle] : 'PAUSED'}</h4>
                   <h2 id="time-left" className="text-center">{`${minutes(timeLeft)} : ${seconds(timeLeft)}`}</h2>
                 </Col>
               </Row>
@@ -148,8 +143,8 @@ function App() {
                   id="start_stop"
                   variant="primary"
                   onClick={() => {
-                    setPlayOn(!playOn)
-                    startStop()
+                    setPlayOn(prevState => !prevState)
+                    //startStop()
                   }}>{playOn ? "Stop" : "Start"}</Button>
                 <Button
                   id="reset"
