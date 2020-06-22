@@ -1,6 +1,7 @@
 import React from 'react'
-import { ArrowDownwardOutlined, ArrowUpwardOutlined } from '@material-ui/icons';
-import { Row, Button } from 'react-bootstrap';
+import { Row, Button, Badge } from 'react-bootstrap';
+import '../App.css';
+
 
 
 function TimesSet({ setBreakLength, breakLength, setSessionLength, sessionLength }) {
@@ -43,31 +44,37 @@ function TimesSet({ setBreakLength, breakLength, setSessionLength, sessionLength
             <Row className="bg-secondary rounded d-flex align-items-center justify-content-around my-1 p-3">
                 <span id="break-label">Break Length</span>
                 <Button
-                    id="break-increment"
-                    className='h4'
-                    onClick={handleBreakIncrement}
-                >+
-                    </Button>
-                <div id="break-length" className='h4'>{breakLength}</div>
-                <Button
+                    variant="secondary"
                     id="break-decrement"
+                    className='d-flex align-items-center badge-pill shadow '
                     onClick={handleBreakDecrement}
-                >-
+                >
+                    <i class="material-icons">arrow_back</i>
+                </Button>
+                <span id="break-length" className='h3'>{breakLength}</span>
+                <Button
+                    variant="secondary"
+                    id="break-increment"
+                    className='d-flex align-items-center badge-pill shadow '
+                    onClick={handleBreakIncrement}
+                >
+                    <i class="material-icons">arrow_forward</i>
                 </Button>
             </Row>
             <Row className="bg-secondary rounded d-flex align-items-center justify-content-around my-1 p-3">
-                <span id="session-label">Session Length</span>
+                <span id="session-label">Session Length</span><Button
+                    className="badge-pill badge-sm"
+                    id="session-decrement"
+                    onClick={handleSessionDecrement}
+                >
+                    <span class="material-icons">arrow_forward</span>
+                </Button>
+                <div id="session-length" className='h4'>{sessionLength}</div>
                 <Button
                     id="session-increment"
                     className='h4'
                     onClick={handleSessionIncrement}
                 >+
-                </Button>
-                <div id="session-length" className='h4'>{sessionLength}</div>
-                <Button
-                    id="session-decrement"
-                    onClick={handleSessionDecrement}
-                >-
                 </Button>
             </Row>
 

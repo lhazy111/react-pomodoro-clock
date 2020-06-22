@@ -21,7 +21,7 @@ function App() {
   const sound1 = useRef()
   const sound2 = useRef()
 
-  useInterval(() => setTimeLeft(timeLeft - 1000), playOn ? 100 : undefined);
+  useInterval(() => setTimeLeft(timeLeft - 1000), playOn ? 1000 : undefined);
 
   useEffect(() => {
     setTimeLeft(sessionLength * 60 * 1000)
@@ -52,24 +52,32 @@ function App() {
     sound2.current.currentTime = 0
   }
 
-  const playSound = (audioId) => {
-    document.getElementById(audioId).play()
-  }
+
 
   return (
     <div className="App">
-      <Container fluid className="h-100" >
-        <Row className="bg-secondary">
+      <Container fluid id="wrap">
+        <Row>
           <Col>
             <h1>Pomodoro</h1>
           </Col>
         </Row>
         <Row className="d-flex justify-content-center pt-5 mt-5">
           <Col xs={10} md={8}>
-            <Jumbotron className="p-3 shadow-lg border border-primary">
-              <h1 className="border text-center">Pomodoro clock</h1>
+            <Jumbotron className="p-3 shadow border ">
               <Row>
-                <Col className="m-2">
+                <Col>
+                  <h1 className=" text-center">Pomodoro clock</h1>
+                </Col>
+              </Row>
+              <Row className="justify-content-around">
+                <Col sm={12} md={5} className="m-1">
+                  <Timer
+                    timeLeft={timeLeft}
+                    mode={mode}
+                    cycle={cycle} />
+                </Col>
+                <Col sm={12} md={5} className="m-1 border">
                   <TimesSet
                     setBreakLength={setBreakLength}
                     breakLength={breakLength}
@@ -77,12 +85,7 @@ function App() {
                     sessionLength={sessionLength}
                   />
                 </Col>
-                <Col className="border border-secondary">
-                  <Timer
-                    timeLeft={timeLeft}
-                    mode={mode}
-                    cycle={cycle} />
-                </Col>
+
               </Row>
               <Row>
                 <Col>

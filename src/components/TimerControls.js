@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button } from 'react-bootstrap';
+import { Button, Badge } from 'react-bootstrap';
 
 
 function TimerControls({ playOn, setPlayOn, reset }) {
@@ -7,21 +7,22 @@ function TimerControls({ playOn, setPlayOn, reset }) {
 
     return (
         <div>
-            <Button
-                className='m-1 small btn-sm shadow-sm'
+            <Badge
+                className='m-2 shadow'
                 id="start_stop"
-                variant="primary"
                 onClick={() => {
                     setPlayOn(prevState => !prevState)
                     //startStop()
-                }}>{playOn ? "Stop" : "Start"}</Button>
-            <Button
-                className='m-1 btn-sm shadow-sm'
+                }}>{playOn ?
+                    <i class="material-icons md-48">pause_circle_outline</i>
+                    : <i class="material-icons md-48">play_circle_outline</i>}
+            </Badge>
+            <Badge pill
+                className='m-2 shadow-sm'
                 id="reset"
-                variant="primary"
                 onClick={reset}>
-                RESET
-                  </Button>
+                <span class="material-icons">restore</span>
+            </Badge>
         </div>
     )
 }
