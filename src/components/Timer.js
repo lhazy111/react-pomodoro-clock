@@ -1,5 +1,4 @@
 import React from 'react'
-import moment from 'moment'
 
 
 function Timer({ timeLeft, mode, cycle }) {
@@ -18,7 +17,7 @@ function Timer({ timeLeft, mode, cycle }) {
     return (
         <div>
             <h4 id="timer-label" className="text-center">{mode[cycle]}</h4>
-            <h2 id="time-left">{formattedTime(timeLeft)}</h2>
+            <h2 id="time-left" className="text-center">{formattedTime(timeLeft)}</h2>
         </div>
     )
 }

@@ -1,12 +1,14 @@
 import React from 'react';
 import ReactFCCtest from 'react-fcctest'
 import { useState } from 'react'
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import useInterval from 'react-useinterval'
 import Timer from './components/Timer'
 import TimerControls from './components/TimerControls'
 import TimesSet from './components/TimesSet'
 import { Container, Row, Col, Jumbotron } from 'react-bootstrap';
+import beep1 from './sounds/beep1.mp3'
+import beep2 from './sounds/beep2.mp3'
 import './App.css';
 
 function App() {
@@ -16,8 +18,10 @@ function App() {
   const [timeLeft, setTimeLeft] = useState(sessionLength * 60 * 1000)
   const [playOn, setPlayOn] = useState(false)
   const mode = ['Session', 'Break']
+  const sound1 = useRef()
+  const sound2 = useRef()
 
-  useInterval(() => setTimeLeft(timeLeft - 1000), playOn ? 1000 : undefined);
+  useInterval(() => setTimeLeft(timeLeft - 1000), playOn ? 100 : undefined);
 
   useEffect(() => {
     setTimeLeft(sessionLength * 60 * 1000)
@@ -27,9 +31,11 @@ function App() {
   useEffect(() => {
     if (timeLeft === 0 && cycle === 0) {
       setCycle(1)
+      sound2.current.play()
       setTimeLeft(breakLength * 60 * 1000)
     } else if (timeLeft === 0 && cycle === 1) {
       setCycle(0)
+      sound2.current.play()
       setTimeLeft(sessionLength * 60 * 1000)
     }
   }, [timeLeft, breakLength, sessionLength, cycle])
@@ -42,7 +48,12 @@ function App() {
     setTimeLeft(25 * 60 * 1000)
     setBreakLength(5)
     setSessionLength(25)
+    sound2.current.pause()
+    sound2.current.currentTime = 0
+  }
 
+  const playSound = (audioId) => {
+    document.getElementById(audioId).play()
   }
 
   return (
@@ -86,7 +97,10 @@ function App() {
           </Col>
         </Row>
       </Container>
+
       <ReactFCCtest />
+      <audio id="beep1" src={beep1} ref={sound1} />
+      <audio id="beep" src={beep2} ref={sound2} />
     </div>
   );
 }

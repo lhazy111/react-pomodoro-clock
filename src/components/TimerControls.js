@@ -22,7 +22,7 @@ function TimerControls({ playOn, setPlayOn, reset }) {
                 onClick={reset}>
                 RESET
                   </Button>
-        </div >
+        </div>
     )
 }
 
