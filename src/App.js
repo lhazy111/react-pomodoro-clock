@@ -20,22 +20,25 @@ function App() {
   const mode = ['Session', 'Break']
   const sound1 = useRef()
   const sound2 = useRef()
+  const [soundChoice, setSoundChoice] = useState(sound2)
+  const [volumeLev, setVolumeLev] = useState(0.5)
 
   useInterval(() => setTimeLeft(timeLeft - 1000), playOn ? 1000 : undefined);
 
   useEffect(() => {
     setTimeLeft(sessionLength * 60 * 1000)
-
-  }, [sessionLength])
+    document.getElementById('beep').volume = volumeLev
+    document.getElementById('beep1').volume = volumeLev
+  }, [sessionLength, volumeLev])
 
   useEffect(() => {
     if (timeLeft === 0 && cycle === 0) {
       setCycle(1)
-      sound2.current.play()
+      soundChoice.current.play()
       setTimeLeft(breakLength * 60 * 1000)
     } else if (timeLeft === 0 && cycle === 1) {
       setCycle(0)
-      sound2.current.play()
+      soundChoice.current.play()
       setTimeLeft(sessionLength * 60 * 1000)
     }
   }, [timeLeft, breakLength, sessionLength, cycle])
@@ -48,9 +51,24 @@ function App() {
     setTimeLeft(25 * 60 * 1000)
     setBreakLength(5)
     setSessionLength(25)
-    sound2.current.pause()
-    sound2.current.currentTime = 0
+    soundChoice.current.pause()
+    soundChoice.current.currentTime = 0
   }
+
+  const handleSwitchChange = (event, value) => {
+    if (soundChoice === sound1) {
+      sound2.current.play()
+      setSoundChoice(sound2)
+    } else {
+      sound1.current.play()
+      setSoundChoice(sound1)
+    }
+  }
+
+  const handleSlideChange = (event, newValue) => {
+    newValue = newValue / 100
+    setVolumeLev(newValue);
+  };
 
 
 
@@ -63,11 +81,11 @@ function App() {
           </Col>
         </Row>
         <Row className="d-flex justify-content-center pt-5 mt-5">
-          <Col xs={10} md={8}>
+          <Col xs={12} md={10} lg={8}>
             <Jumbotron className="p-3 shadow border ">
               <Row>
                 <Col>
-                  <h1 className=" text-center">Pomodoro clock</h1>
+                  <h1 className="text-center text-light">Pomodoro clock</h1>
                 </Col>
               </Row>
               <Row className="justify-content-around">
@@ -77,7 +95,7 @@ function App() {
                     mode={mode}
                     cycle={cycle} />
                 </Col>
-                <Col sm={12} md={5} className="m-1 border">
+                <Col sm={12} md={5} className="m-1">
                   <TimesSet
                     setBreakLength={setBreakLength}
                     breakLength={breakLength}
@@ -88,11 +106,13 @@ function App() {
 
               </Row>
               <Row>
-                <Col>
+                <Col className="m-1">
                   <TimerControls
                     reset={reset}
                     playOn={playOn}
-                    setPlayOn={setPlayOn} >
+                    setPlayOn={setPlayOn}
+                    handleSwitchChange={handleSwitchChange}
+                    setVolumeLevel={setVolumeLev}>
                   </TimerControls>
                 </Col>
               </Row>

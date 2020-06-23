@@ -1,28 +1,84 @@
 import React from 'react'
-import { Button, Badge } from 'react-bootstrap';
+import { useState } from 'react'
+import { Button, Row, Col, Form } from 'react-bootstrap';
+import '../index.css';
+import Switch from '@material-ui/core/Switch';
+import Slider from '@material-ui/core/Slider';
+import VolumeDown from '@material-ui/icons/VolumeDown';
+import VolumeUp from '@material-ui/icons/VolumeUp';
+import { lime } from '@material-ui/core/colors';
 
 
-function TimerControls({ playOn, setPlayOn, reset }) {
+
+function TimerControls({ playOn, setPlayOn, reset, handleSwitchChange, setVolumeLevel }) {
+    const [value, setValue] = useState(30)
+
+    const handleSlideChange = (event, newValue) => {
+        setValue(newValue)
+        setVolumeLevel(newValue / 100);
+    };
+
+
 
 
     return (
         <div>
-            <Badge
-                className='m-2 shadow'
-                id="start_stop"
-                onClick={() => {
-                    setPlayOn(prevState => !prevState)
-                    //startStop()
-                }}>{playOn ?
-                    <i class="material-icons md-48">pause_circle_outline</i>
-                    : <i class="material-icons md-48">play_circle_outline</i>}
-            </Badge>
-            <Badge pill
-                className='m-2 shadow-sm'
-                id="reset"
-                onClick={reset}>
-                <span class="material-icons">restore</span>
-            </Badge>
+            <Row className="d-flex justify-content-center align-items-center mx-2 pt-2">
+                <Col xs={12} md={5}
+                    className="d-flex justify-content-around">
+                    <Button
+                        variant="outline-light"
+                        className="badge-pill shadow m-1"
+                        id="start_stop"
+                        onClick={() => {
+                            setPlayOn(prevState => !prevState)
+                        }}>{playOn ?
+                            <i class="material-icons align-middle">pause_circle_outline</i>
+                            : <i class="material-icons align-middle">play_circle_outline</i>}
+                    </Button>
+                    <Button
+                        variant="outline-light"
+                        className="badge-pill shadow m-1"
+                        id="reset"
+                        onClick={reset}>
+                        <i class="material-icons align-middle">restore</i>
+                    </Button>
+                </Col>
+                <Col xs={12} md={5}
+                    className="float-right">
+                    <Row>
+                        <Col xs={12}
+                            className="text-light  text-center">
+                            <span>Sound</span>
+                        </Col>
+                        <Col sm={6} xs={12}
+                            className=" text-center text-light">
+                            <span>1</span>
+                            <Switch
+                                color="primary.contrastText"
+                                onChange={handleSwitchChange} />
+                            <span>2</span>
+                        </Col>
+                        <Col sm={6} xs={12}
+                            className="d-flex align-items-center text-light ">
+                            <VolumeDown />
+                            <Slider
+                                className="slider"
+                                color="secondary"
+                                value={value}
+                                onChange={handleSlideChange}
+                                aria-labelledby="continuous-slider" />
+                            <VolumeUp />
+                        </Col>
+                    </Row>
+                </Col>
+
+            </Row>
+
+
+
+
+
         </div>
     )
 }

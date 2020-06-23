@@ -1,6 +1,6 @@
 import React from 'react'
-import { Row, Button, Badge } from 'react-bootstrap';
-import '../App.css';
+import { Col, Row, Button } from 'react-bootstrap';
+import '../index.css';
 
 
 
@@ -41,41 +41,62 @@ function TimesSet({ setBreakLength, breakLength, setSessionLength, sessionLength
 
     return (
         <div>
-            <Row className="bg-secondary rounded d-flex align-items-center justify-content-around my-1 p-3">
-                <span id="break-label">Break Length</span>
-                <Button
-                    variant="secondary"
-                    id="break-decrement"
-                    className='d-flex align-items-center badge-pill shadow '
-                    onClick={handleBreakDecrement}
-                >
-                    <i class="material-icons">arrow_back</i>
-                </Button>
-                <span id="break-length" className='h3'>{breakLength}</span>
-                <Button
-                    variant="secondary"
-                    id="break-increment"
-                    className='d-flex align-items-center badge-pill shadow '
-                    onClick={handleBreakIncrement}
-                >
-                    <i class="material-icons">arrow_forward</i>
-                </Button>
+            <Row className="border rounded m-1 text-light d-flex flex-row align-items-center justify-content-center">
+                <Col sm={12} md={12} className="text-center">
+                    <span id="session-label">Session Length</span>
+                </Col>
+                <Col xs={3} className="p-2 text-center">
+                    <Button
+                        variant="outline-light"
+                        className="badge-pill shadow"
+                        id="session-decrement"
+                        onClick={handleSessionDecrement}
+                    >
+                        <i className="material-icons align-middle">arrow_back</i>
+                    </Button>
+                </Col>
+                <Col xs={4} className="p-2 text-center">
+                    <div id="session-length" className='h4 m-0'>{sessionLength}</div>
+                </Col>
+                <Col xs={3} className="p-2 text-center">
+                    <Button
+                        variant="outline-light"
+                        id="session-increment"
+                        className='badge-pill shadow'
+                        onClick={handleSessionIncrement}
+                    >
+                        <i class="material-icons align-middle">arrow_forward</i>
+                    </Button>
+                </Col>
             </Row>
-            <Row className="bg-secondary rounded d-flex align-items-center justify-content-around my-1 p-3">
-                <span id="session-label">Session Length</span><Button
-                    className="badge-pill badge-sm"
-                    id="session-decrement"
-                    onClick={handleSessionDecrement}
-                >
-                    <span class="material-icons">arrow_forward</span>
-                </Button>
-                <div id="session-length" className='h4'>{sessionLength}</div>
-                <Button
-                    id="session-increment"
-                    className='h4'
-                    onClick={handleSessionIncrement}
-                >+
-                </Button>
+
+            <Row className="border rounded m-1 text-light d-flex flex-row align-items-center justify-content-center">
+                <Col sm={12} md={12} className="text-center">
+                    <span id="break-label">Break Length</span>
+                </Col>
+                <Col xs={3} className="p-2 text-center">
+                    <Button
+                        variant="outline-light"
+                        className="badge-pill shadow"
+                        id="break-decrement"
+                        onClick={handleBreakDecrement}
+                    >
+                        <i className="material-icons align-middle">arrow_back</i>
+                    </Button>
+                </Col>
+                <Col xs={4} className="p-2 text-center">
+                    <div id="break-length" className='h4 m-0'>{breakLength}</div>
+                </Col>
+                <Col xs={3} className="p-2 text-center">
+                    <Button
+                        variant="outline-light"
+                        id="break-increment"
+                        className='badge-pill shadow'
+                        onClick={handleBreakIncrement}
+                    >
+                        <i class="material-icons align-middle">arrow_forward</i>
+                    </Button>
+                </Col>
             </Row>
 
         </div>

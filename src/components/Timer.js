@@ -16,7 +16,7 @@ function Timer({ timeLeft, mode, cycle }) {
 
     return (
         <div className="timer-neon">
-            <h4 id="timer-label" className="text-center">{mode[cycle]}</h4>
+            <h2 id="timer-label" className="text-center">{mode[cycle]}</h2>
             <h1 id="time-left" className=" display-2 text-center">{formattedTime(timeLeft)}</h1>
         </div>
     )
