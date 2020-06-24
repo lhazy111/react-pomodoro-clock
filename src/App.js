@@ -10,6 +10,7 @@ import { Container, Row, Col, Jumbotron } from 'react-bootstrap';
 import beep1 from './sounds/beep1.mp3'
 import beep2 from './sounds/beep2.mp3'
 import './App.css';
+import './index.css'
 
 function App() {
   const [breakLength, setBreakLength] = useState(5)
@@ -25,11 +26,16 @@ function App() {
 
   useInterval(() => setTimeLeft(timeLeft - 1000), playOn ? 1000 : undefined);
 
+
+
   useEffect(() => {
     setTimeLeft(sessionLength * 60 * 1000)
+  }, [sessionLength])
+
+  useEffect(() => {
     document.getElementById('beep').volume = volumeLev
     document.getElementById('beep1').volume = volumeLev
-  }, [sessionLength, volumeLev])
+  }, [volumeLev])
 
   useEffect(() => {
     if (timeLeft === 0 && cycle === 0) {
@@ -41,7 +47,7 @@ function App() {
       soundChoice.current.play()
       setTimeLeft(sessionLength * 60 * 1000)
     }
-  }, [timeLeft, breakLength, sessionLength, cycle])
+  }, [timeLeft, breakLength, sessionLength, cycle, soundChoice])
 
 
   const reset = () => {
@@ -55,7 +61,7 @@ function App() {
     soundChoice.current.currentTime = 0
   }
 
-  const handleSwitchChange = (event, value) => {
+  const handleSwitchChange = () => {
     if (soundChoice === sound1) {
       sound2.current.play()
       setSoundChoice(sound2)
@@ -65,62 +71,47 @@ function App() {
     }
   }
 
-  const handleSlideChange = (event, newValue) => {
-    newValue = newValue / 100
-    setVolumeLev(newValue);
-  };
-
 
 
   return (
     <div className="App">
-      <Container fluid id="wrap">
-        <Row>
-          <Col>
-            <h1>Pomodoro</h1>
-          </Col>
-        </Row>
-        <Row className="d-flex justify-content-center pt-5 mt-5">
-          <Col xs={12} md={10} lg={8}>
-            <Jumbotron className="p-3 shadow border ">
-              <Row>
-                <Col>
-                  <h1 className="text-center text-light">Pomodoro clock</h1>
-                </Col>
-              </Row>
-              <Row className="justify-content-around">
-                <Col sm={12} md={5} className="m-1">
-                  <Timer
-                    timeLeft={timeLeft}
-                    mode={mode}
-                    cycle={cycle} />
-                </Col>
-                <Col sm={12} md={5} className="m-1">
-                  <TimesSet
-                    setBreakLength={setBreakLength}
-                    breakLength={breakLength}
-                    setSessionLength={setSessionLength}
-                    sessionLength={sessionLength}
-                  />
-                </Col>
-
-              </Row>
-              <Row>
-                <Col className="m-1">
-                  <TimerControls
-                    reset={reset}
-                    playOn={playOn}
-                    setPlayOn={setPlayOn}
-                    handleSwitchChange={handleSwitchChange}
-                    setVolumeLevel={setVolumeLev}>
-                  </TimerControls>
-                </Col>
-              </Row>
-            </Jumbotron>
-          </Col>
-        </Row>
+      <Container fluid id="wrap" className="d-flex align-items-center justify-content-center">
+        <Jumbotron id="jumbo" className="bg-dark p-5">
+          <Row>
+            <Col className="mb-3">
+              <h1 id="title" className="text-center text-light">Pomodoro clock</h1>
+            </Col>
+          </Row>
+          <Row className="d-flex justify-content-center">
+            <Col sm={12} md={5} className="">
+              <Timer
+                timeLeft={timeLeft}
+                mode={mode}
+                cycle={cycle} />
+            </Col>
+            <Col sm={12} md={7} className="">
+              <TimesSet
+                setBreakLength={setBreakLength}
+                breakLength={breakLength}
+                setSessionLength={setSessionLength}
+                sessionLength={sessionLength}
+                playOn={playOn}
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col className="m-1">
+              <TimerControls
+                reset={reset}
+                playOn={playOn}
+                setPlayOn={setPlayOn}
+                handleSwitchChange={handleSwitchChange}
+                setVolumeLevel={setVolumeLev}>
+              </TimerControls>
+            </Col>
+          </Row>
+        </Jumbotron>
       </Container>
-
       <ReactFCCtest />
       <audio id="beep1" src={beep1} ref={sound1} />
       <audio id="beep" src={beep2} ref={sound2} />

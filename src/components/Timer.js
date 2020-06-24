@@ -1,4 +1,8 @@
 import React from 'react'
+import { Container, Row, Col, Jumbotron } from 'react-bootstrap';
+
+import '../index.css';
+
 
 
 function Timer({ timeLeft, mode, cycle }) {
@@ -15,10 +19,18 @@ function Timer({ timeLeft, mode, cycle }) {
     }
 
     return (
-        <div className="timer-neon">
-            <h2 id="timer-label" className="text-center">{mode[cycle]}</h2>
-            <h1 id="time-left" className=" display-2 text-center">{formattedTime(timeLeft)}</h1>
-        </div>
+        <Container>
+            <Row>
+                <Col>
+                    <h2 id="timer-label" className="text-center text-light">{mode[cycle]}</h2>
+                </Col>
+            </Row>
+            <Row>
+
+                <h1 id="time-left" className=" display-2 text-light mx-auto">{formattedTime(timeLeft)}</h1>
+
+            </Row>
+        </Container>
     )
 }
 

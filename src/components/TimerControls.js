@@ -1,12 +1,11 @@
 import React from 'react'
 import { useState } from 'react'
-import { Button, Row, Col, Form } from 'react-bootstrap';
+import { Button, Row, Col } from 'react-bootstrap';
 import '../index.css';
 import Switch from '@material-ui/core/Switch';
 import Slider from '@material-ui/core/Slider';
 import VolumeDown from '@material-ui/icons/VolumeDown';
 import VolumeUp from '@material-ui/icons/VolumeUp';
-import { lime } from '@material-ui/core/colors';
 
 
 
@@ -23,7 +22,7 @@ function TimerControls({ playOn, setPlayOn, reset, handleSwitchChange, setVolume
 
     return (
         <div>
-            <Row className="d-flex justify-content-center align-items-center mx-2 pt-2">
+            <Row className="d-flex justify-content-center align-items-center pt-2 border rounded">
                 <Col xs={12} md={5}
                     className="d-flex justify-content-around">
                     <Button
@@ -44,22 +43,22 @@ function TimerControls({ playOn, setPlayOn, reset, handleSwitchChange, setVolume
                         <i class="material-icons align-middle">restore</i>
                     </Button>
                 </Col>
-                <Col xs={12} md={5}
-                    className="float-right">
-                    <Row>
+                <Col xs={12} md={6}
+                    className="">
+                    <Row id="volSlider">
                         <Col xs={12}
                             className="text-light  text-center">
                             <span>Sound</span>
                         </Col>
-                        <Col sm={6} xs={12}
+                        <Col sm={5} xs={12}
                             className=" text-center text-light">
                             <span>1</span>
                             <Switch
-                                color="primary.contrastText"
+                                color="primary"
                                 onChange={handleSwitchChange} />
                             <span>2</span>
                         </Col>
-                        <Col sm={6} xs={12}
+                        <Col sm={7} xs={12}
                             className="d-flex align-items-center text-light ">
                             <VolumeDown />
                             <Slider

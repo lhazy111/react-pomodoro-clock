@@ -1,14 +1,27 @@
 import React from 'react'
-import { Col, Row, Button } from 'react-bootstrap';
+import { Container, Col, Row, Button } from 'react-bootstrap';
+//import { Button, Typography } from '@material-ui/core'
+import { makeStyles } from '@material-ui/core/styles';
 import '../index.css';
+const useStyles = makeStyles({
+    root: {
+        backgroundColor: 'red',
+        color: props => props.color,
+    },
+    hellothere: {
+        backgroundColor: 'blue',
+        color: 'yellow',
+        fontStyle: 'oblique'
+    }
+}
+);
 
 
-
-function TimesSet({ setBreakLength, breakLength, setSessionLength, sessionLength }) {
+function TimesSet({ setBreakLength, breakLength, setSessionLength, sessionLength, playOn }) {
 
 
     const handleBreakIncrement = () => {
-        if (breakLength >= 60) {
+        if (breakLength >= 60 || playOn) {
             return null
         } else {
             setBreakLength(breakLength + 1)
@@ -16,14 +29,14 @@ function TimesSet({ setBreakLength, breakLength, setSessionLength, sessionLength
     }
 
     const handleBreakDecrement = () => {
-        if (breakLength === 1) {
+        if (breakLength === 1 || playOn) {
             return null
         } else {
             setBreakLength(breakLength - 1)
         }
     }
     const handleSessionIncrement = () => {
-        if (sessionLength >= 60) {
+        if (sessionLength >= 60 || playOn) {
             return null
         } else {
             setSessionLength(sessionLength + 1)
@@ -31,74 +44,69 @@ function TimesSet({ setBreakLength, breakLength, setSessionLength, sessionLength
     }
 
     const handleSessionDecrement = () => {
-        if (sessionLength === 1) {
+        if (sessionLength === 1 || playOn) {
             return null
         } else {
             setSessionLength(sessionLength - 1)
         }
     }
 
+    const classes = useStyles()
 
     return (
         <div>
-            <Row className="border rounded m-1 text-light d-flex flex-row align-items-center justify-content-center">
-                <Col sm={12} md={12} className="text-center">
-                    <span id="session-label">Session Length</span>
-                </Col>
-                <Col xs={3} className="p-2 text-center">
-                    <Button
-                        variant="outline-light"
-                        className="badge-pill shadow"
-                        id="session-decrement"
-                        onClick={handleSessionDecrement}
-                    >
-                        <i className="material-icons align-middle">arrow_back</i>
-                    </Button>
-                </Col>
-                <Col xs={4} className="p-2 text-center">
-                    <div id="session-length" className='h4 m-0'>{sessionLength}</div>
-                </Col>
-                <Col xs={3} className="p-2 text-center">
-                    <Button
-                        variant="outline-light"
-                        id="session-increment"
-                        className='badge-pill shadow'
-                        onClick={handleSessionIncrement}
-                    >
-                        <i class="material-icons align-middle">arrow_forward</i>
-                    </Button>
-                </Col>
-            </Row>
-
-            <Row className="border rounded m-1 text-light d-flex flex-row align-items-center justify-content-center">
-                <Col sm={12} md={12} className="text-center">
-                    <span id="break-label">Break Length</span>
-                </Col>
-                <Col xs={3} className="p-2 text-center">
-                    <Button
-                        variant="outline-light"
-                        className="badge-pill shadow"
-                        id="break-decrement"
-                        onClick={handleBreakDecrement}
-                    >
-                        <i className="material-icons align-middle">arrow_back</i>
-                    </Button>
-                </Col>
-                <Col xs={4} className="p-2 text-center">
-                    <div id="break-length" className='h4 m-0'>{breakLength}</div>
-                </Col>
-                <Col xs={3} className="p-2 text-center">
-                    <Button
-                        variant="outline-light"
-                        id="break-increment"
-                        className='badge-pill shadow'
-                        onClick={handleBreakIncrement}
-                    >
-                        <i class="material-icons align-middle">arrow_forward</i>
-                    </Button>
-                </Col>
-            </Row>
-
+            <Container>
+                <Row className="border rounded m-1 text-light">
+                    <Col xs={1} className="ml-3 d-flex align-items-center justify-content-center">
+                        <Button
+                            variant="outline-light"
+                            size="sm"
+                            className="badge-pill shadow"
+                            id="session-decrement"
+                            onClick={handleSessionDecrement}
+                        >
+                            <span>-</span></Button>
+                    </Col>
+                    <Col className="text-center p-1">
+                        <div id="session-label">Session Length</div>
+                        <div id="session-length" className='h4'>{sessionLength}</div>
+                    </Col>
+                    <Col xs={1} className="mr-3 d-flex align-items-center justify-content-center">
+                        <Button
+                            variant="outline-light"
+                            size="sm"
+                            id="session-increment"
+                            className='badge-pill shadow'
+                            onClick={handleSessionIncrement}
+                        >+</Button>
+                    </Col>
+                </Row>
+                <Row className="border rounded m-1 text-light">
+                    <Col xs={1} className="ml-3 d-flex align-items-center justify-content-center">
+                        <Button
+                            variant="outline-light"
+                            size="sm"
+                            className="badge-pill shadow"
+                            id="break-decrement"
+                            onClick={handleBreakDecrement}
+                        >
+                            <span>-</span></Button>
+                    </Col>
+                    <Col className="text-center p-1">
+                        <div id="break-label">Break Length</div>
+                        <div id="break-length" className='h4'>{breakLength}</div>
+                    </Col>
+                    <Col xs={1} className="mr-3 d-flex align-items-center justify-content-center">
+                        <Button
+                            variant="outline-light"
+                            size="sm"
+                            id="break-increment"
+                            className='badge-pill shadow'
+                            onClick={handleBreakIncrement}
+                        >+</Button>
+                    </Col>
+                </Row>
+            </Container>
         </div>
     )
 }
