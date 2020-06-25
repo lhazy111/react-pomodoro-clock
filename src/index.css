@@ -12,6 +12,11 @@ body {
   font-family: 'Roboto Mono', monospace;
 }
 
+footer{
+  font-size: smaller;
+  font-weight: lighter;
+}
+
 
 #wrap{
   font-family: 'Roboto Mono', monospace;
@@ -54,7 +59,7 @@ body {
   font-feature-settings: 'liga';
 }
 
-@media (max-width: 767.98px) { 
+@media (max-width: 575.98px) { 
  #jumbo{
    background-color: black !important;
  }
@@ -63,6 +68,9 @@ body {
   }
   #volSlider{
     display: none;
+  }
+  #timeset{
+    font-size: 13px !important;
   }
  }
 

@@ -1,9 +1,6 @@
 import React from 'react'
-import { Container, Row, Col, Jumbotron } from 'react-bootstrap';
-
+import { Container, Row, Col } from 'react-bootstrap';
 import '../index.css';
-
-
 
 function Timer({ timeLeft, mode, cycle }) {
     const formattedTime = num => {
@@ -26,9 +23,7 @@ function Timer({ timeLeft, mode, cycle }) {
                 </Col>
             </Row>
             <Row>
-
                 <h1 id="time-left" className=" display-2 text-light mx-auto">{formattedTime(timeLeft)}</h1>
-
             </Row>
         </Container>
     )

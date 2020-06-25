@@ -1,20 +1,7 @@
 import React from 'react'
 import { Container, Col, Row, Button } from 'react-bootstrap';
 //import { Button, Typography } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles';
 import '../index.css';
-const useStyles = makeStyles({
-    root: {
-        backgroundColor: 'red',
-        color: props => props.color,
-    },
-    hellothere: {
-        backgroundColor: 'blue',
-        color: 'yellow',
-        fontStyle: 'oblique'
-    }
-}
-);
 
 
 function TimesSet({ setBreakLength, breakLength, setSessionLength, sessionLength, playOn }) {
@@ -51,11 +38,10 @@ function TimesSet({ setBreakLength, breakLength, setSessionLength, sessionLength
         }
     }
 
-    const classes = useStyles()
 
     return (
         <div>
-            <Container>
+            <Container id="timeset">
                 <Row className="border rounded m-1 text-light">
                     <Col xs={1} className="ml-3 d-flex align-items-center justify-content-center">
                         <Button

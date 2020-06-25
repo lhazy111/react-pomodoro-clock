@@ -6,25 +6,28 @@ import Switch from '@material-ui/core/Switch';
 import Slider from '@material-ui/core/Slider';
 import VolumeDown from '@material-ui/icons/VolumeDown';
 import VolumeUp from '@material-ui/icons/VolumeUp';
-
-
+import { makeStyles } from '@material-ui/core'
+const useStyles = makeStyles({
+    sliderStyle: {
+        color: "white",
+    }
+});
 
 function TimerControls({ playOn, setPlayOn, reset, handleSwitchChange, setVolumeLevel }) {
     const [value, setValue] = useState(30)
+    const classes = useStyles();
+    console.log('classes', classes)
 
-    const handleSlideChange = (event, newValue) => {
+    const handleSlideChange = (newValue) => {
         setValue(newValue)
         setVolumeLevel(newValue / 100);
     };
 
-
-
-
     return (
-        <div>
-            <Row className="d-flex justify-content-center align-items-center pt-2 border rounded">
+        <>
+            <Row className="d-flex justify-content-center align-items-center">
                 <Col xs={12} md={5}
-                    className="d-flex justify-content-around">
+                    className="d-flex justify-content-around align-items-center">
                     <Button
                         variant="outline-light"
                         className="badge-pill shadow m-1"
@@ -50,20 +53,20 @@ function TimerControls({ playOn, setPlayOn, reset, handleSwitchChange, setVolume
                             className="text-light  text-center">
                             <span>Sound</span>
                         </Col>
-                        <Col sm={5} xs={12}
+                        <Col sm={5} xs={12} md={4}
                             className=" text-center text-light">
                             <span>1</span>
                             <Switch
-                                color="primary"
+                                color="text.secondary"
                                 onChange={handleSwitchChange} />
                             <span>2</span>
                         </Col>
-                        <Col sm={7} xs={12}
+                        <Col sm={6} xs={12} md={8}
                             className="d-flex align-items-center text-light ">
                             <VolumeDown />
                             <Slider
-                                className="slider"
-                                color="secondary"
+                                track={false}
+                                className={classes.sliderStyle}
                                 value={value}
                                 onChange={handleSlideChange}
                                 aria-labelledby="continuous-slider" />
@@ -71,14 +74,8 @@ function TimerControls({ playOn, setPlayOn, reset, handleSwitchChange, setVolume
                         </Col>
                     </Row>
                 </Col>
-
             </Row>
-
-
-
-
-
-        </div>
+        </>
     )
 }
 

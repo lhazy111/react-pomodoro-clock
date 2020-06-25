@@ -72,24 +72,23 @@ function App() {
   }
 
 
-
   return (
     <div className="App">
       <Container fluid id="wrap" className="d-flex align-items-center justify-content-center">
-        <Jumbotron id="jumbo" className="bg-dark p-5">
+        <Jumbotron id="jumbo" className="bg-dark px-5 pt-5 pb-4">
           <Row>
             <Col className="mb-3">
               <h1 id="title" className="text-center text-light">Pomodoro clock</h1>
             </Col>
           </Row>
           <Row className="d-flex justify-content-center">
-            <Col sm={12} md={5} className="">
+            <Col sm={12} md={6} className="">
               <Timer
                 timeLeft={timeLeft}
                 mode={mode}
                 cycle={cycle} />
             </Col>
-            <Col sm={12} md={7} className="">
+            <Col sm={12} md={6} >
               <TimesSet
                 setBreakLength={setBreakLength}
                 breakLength={breakLength}
@@ -110,6 +109,7 @@ function App() {
               </TimerControls>
             </Col>
           </Row>
+          <footer className="pt-3 pb-0 mb-0 text-center text-light text-monospace text-smaller"> &lt;_Lou/&gt; 2020</footer>
         </Jumbotron>
       </Container>
       <ReactFCCtest />
