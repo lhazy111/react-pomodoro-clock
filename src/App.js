@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactFCCtest from 'react-fcctest'
+//import ReactFCCtest from 'react-fcctest'
 import { useState } from 'react'
 import { useEffect, useRef } from 'react'
 import useInterval from 'react-useinterval'
@@ -105,14 +105,14 @@ function App() {
                 playOn={playOn}
                 setPlayOn={setPlayOn}
                 handleSwitchChange={handleSwitchChange}
-                setVolumeLevel={setVolumeLev}>
+                setVolumeLevel={setVolumeLev}
+              >
               </TimerControls>
             </Col>
           </Row>
           <footer className="pt-3 pb-0 mb-0 text-center text-light text-monospace text-smaller"> &lt;_Lou/&gt; 2020</footer>
         </Jumbotron>
       </Container>
-      <ReactFCCtest />
       <audio id="beep1" src={beep1} ref={sound1} />
       <audio id="beep" src={beep2} ref={sound2} />
     </div>
